@@ -4,6 +4,7 @@ let walls;
 let bonus = [];
 let humans = [];
 let garlic = [];
+let humansEnemy = [];
 
 let keyUp = false;
 let keyDown = false;
@@ -25,6 +26,7 @@ let aiming = false;
 let kill = false;
 let special_attack = false;
 let lose = true;
+let instruction = true;
 
 let stage = 0;
 let adrenaline = 0;
@@ -40,6 +42,21 @@ let stage1_timer = 15;
 let mappingAlpha;
 let mappingSize;
 
+// images
+let draculaImg,
+    garlicImg;
+let humansImg = [];
+let blood_dropImg;
+
+function preload() {
+    draculaImg = loadImage('assets/img/clipart-coat-animated-17-original.png');
+    garlicImg = loadImage('assets/img/garlic.png');
+    for (let h = 0; h < 4; h++) {
+        humansImg[h] = loadImage('assets/img/human' + h + '.png');
+    }
+    blood_dropImg = loadImage('assets/img/blood.png');
+}
+
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
     angleMode(DEGREES);
@@ -49,10 +66,14 @@ function setup() {
     walls = new Walls();
     numHumans = random(3, 6);
     for (let h = 0; h < numHumans; h++) {
-        // if (random(1) < 0.0005) {
-        humans[h] = new Humans();
+        let human = random(humansImg);
+        humans[h] = new Humans(human);
         // }
     }
+}
+
+function windowResized() {
+    resizeCanvas(window.innerWidth, window.innerHeight);
 }
 
 function endGame() {
@@ -310,27 +331,88 @@ function displayGarlic() {
     }
 }
 
+function drawInstructions() {
+    push();
+        translate(width / 2, height / 2);
+        fill(0);
+        strokeWeight(2);
+        stroke(255, 50);
+        rectMode(CENTER);
+        rect(0, 0, width / 2, height / 2);
+        strokeWeight(2);
+        stroke(255, 150);
+        fill('#2F00EB');
+        textSize(width / 40);
+        text('Instructions', 0, -height / 5);
+        fill(255);
+        noStroke();
+        textSize(width / 60);
+        text('You are The Dracula who hunts humans when night falls', 0, -height / 10);
+        fill(253, 255, 208, 100);
+        text('REMEMBER', 0, -height / 25);
+
+        text('Stay away from the lights or you will pay the price', 0, 15);
+        text('Stay away from the garlics, they stink', 0, 60);
+        text('If you encounter a human, try to kill them quickly,...', 0, 100);
+        text('before the time runs out, and other humans will find you', 0, 140);
+
+        // close btn
+        const r = 50;
+        let d = dist(mouseX, mouseY, width / 2 + width / 4, height / 2 -height / 4);
+        if (d < r / 2) {
+            push();
+                fill(255);
+                ellipse(width / 4, -height / 4, r);
+                fill('#2F00EB');
+                textSize(34);
+                text('X', width / 4, -height / 4 + 15);
+            pop();
+        } else {
+            push();
+                fill(200);
+                ellipse(width / 4, -height / 4, r);
+                fill(20);
+                textSize(30);
+                text('X', width / 4, -height / 4 + 15);
+            pop();
+        }
+    pop();
+}
+
+function mouseReleased() {
+    const r = 50;
+    let d = dist(mouseX, mouseY, width / 2 + width / 4, height / 2 -height / 4);
+        if (d < r / 2) {
+            instruction = false;
+        }
+}
+
 function draw() {
     background(51);
     if (stage == 0) {
-        stage1_timer = 15;
-        // pick ups
-        drawBonuses();
-        displayBonuses();
-
-        //garlic
-        drawGarlic();
-        displayGarlic();
-
-        // sun lights
-        drawSunLight();
-        displaySunlight();
-
-        displayHumans();
-        // dracula
-        drawDracula();
-
-        displayWalls();
+        if (instruction) {
+            drawInstructions();
+        } else {
+            stage1_timer = 15;
+            // pick ups
+            drawBonuses();
+            displayBonuses();
+    
+            //garlic
+            drawGarlic();
+            displayGarlic();
+    
+            // sun lights
+            drawSunLight();
+            displaySunlight();
+    
+            displayHumans();
+            // dracula
+            drawDracula();
+    
+            displayWalls();
+        }
+        
     } else if (stage == 1) {
         if (Transition_counterStart) {
             if (stageTransition < 100) {

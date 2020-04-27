@@ -116,9 +116,9 @@ class Garlic {
 
     show() {
         push();
-            rectMode(CENTER);
-            fill(210, 100, 100);
-            rect(this.x, this.y, this.size, this.size);
+            imageMode(CENTER);
+            // fill(210, 100, 100);
+            image(garlicImg, this.x, this.y, this.size, this.size);
         pop();
     }
 

@@ -10,20 +10,20 @@ class Dracula {
     show() {
         push();
             translate(this.x, this.y);
-            rectMode(CENTER);
-            fill(0);
+            imageMode(CENTER);
+            fill(0, 50);
             
             if (keyDown) {
                 rotate(180);
-                rect(0, 0, this.size, this.size);
+                image(draculaImg, 0, 0, this.size, this.size);
             } else if (keyLeft) {
                 rotate(-90); // counter clockwise
-                rect(0, 0, this.size, this.size);
+                image(draculaImg, 0, 0, this.size, this.size);
             } else if (keyRight) {
                 rotate(90); // clockwise
-                rect(0, 0, this.size, this.size);
+                image(draculaImg, 0, 0, this.size, this.size);
             } else {
-                rect(0, 0, this.size, this.size);
+                image(draculaImg, 0, 0, this.size, this.size);
             }    
         pop();
     }
@@ -31,13 +31,13 @@ class Dracula {
     show_stage1() {
         push();
             translate(this.x_stage1, this.y);
-            rectMode(CENTER);
+            imageMode(CENTER);
             fill(0);
             
             if (keyDown) {
                 rotate(180);
-                rect(0, 0, this.size, this.size);
-            } else rect(0, 0, this.size, this.size);
+                image(draculaImg, 0, 0, this.size, this.size);
+            } else image(draculaImg, 0, 0, this.size, this.size);
         pop();
     }
 
@@ -62,9 +62,9 @@ class Dracula {
             translate(50,  height / 2);
             rotate(90);
             textSize(20);
-            fill(255);
-            // stroke(255, 200);
             strokeWeight(2);
+            stroke(0);
+            fill(255, 0, 0);
             text(healthBar + " / 500", 0, 0);
         pop();
     }
@@ -153,7 +153,9 @@ class Dracula {
                 rect(10, 20, this.size / 6, this.size / 6);
                 rect(20, 20, this.size / 6, this.size / 6);
             }
-            fill(255);
+            strokeWeight(2);
+            stroke(0);
+            fill(255, 0, 0);
             textSize(20);
             text(int(healthBar), 0, 0);
         pop();

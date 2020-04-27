@@ -8,8 +8,8 @@ class Bonuses {
     show() {
         push();
             fill(0, 255, 0, 100);
-            rectMode(CENTER);
-            rect(this.x, this.y, this.size, this.size);
+            imageMode(CENTER);
+            image(blood_dropImg, this.x, this.y, this.size, this.size);
         pop();
     }
 

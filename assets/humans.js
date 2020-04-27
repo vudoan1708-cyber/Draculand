@@ -1,8 +1,9 @@
 class Humans {
-    constructor() {
+    constructor(human) {
         this.size = 50;
         this.x = random(width - this.size);
         this.x_stage1 = width - this.size / 2;
+        this.human = human;
         if (random(1) < 0.5) { // to create variation of movement
             this.dirChanged = true;
             this.y_locationChanged = true;
@@ -22,15 +23,16 @@ class Humans {
     show() {
         if (stage == 1) {
             push();
-                fill(0, 0, 255);
-                rectMode(CENTER);
-                rect(this.x_stage1, this.y, this.size, this.size);
+                // fill(0, 0, 255);
+                
+                imageMode(CENTER);
+                image(this.human, this.x_stage1, this.y, this.size, this.size);
             pop();
         } else if (stage == 0) {
             push();
-                fill(0, 0, 255);
-                rectMode(CENTER);
-                rect(this.x, this.y, this.size, this.size);
+                // fill(0, 0, 255);
+                imageMode(CENTER);
+                image(this.human, this.x, this.y, this.size, this.size);
             pop();
         }
     }
