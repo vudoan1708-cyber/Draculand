@@ -39,6 +39,7 @@ let lightCounter = 0;
 let bonusCounter = 0;
 let timeAttack = 0;
 let stage1_timer = 15;
+let instruction_page = 0;
 let mappingAlpha;
 let mappingSize;
 
@@ -344,17 +345,85 @@ function drawInstructions() {
         fill('#2F00EB');
         textSize(width / 40);
         text('Instructions', 0, -height / 5);
-        fill(255);
-        noStroke();
-        textSize(width / 60);
-        text('You are The Dracula who hunts humans when night falls', 0, -height / 10);
-        fill(253, 255, 208, 100);
-        text('REMEMBER', 0, -height / 25);
+        if (instruction_page == 0) {
+            fill(255);
+            noStroke();
+            textSize(width / 60);
+            text('You are The Dracula who hunts humans when night falls', 0, -height / 10);
+            fill(253, 255, 208, 100);
+            text('REMEMBER', 0, -height / 25);
+    
+            text('Stay away from the lights or you will pay the price', 0, 15);
+            text('Stay away from the garlics, they stink', 0, 60);
+            text('If you encounter a human, try to kill them quickly,...', 0, 100);
+            text('before the time runs out, and other humans will find you', 0, 140);
+        } else {
+            fill(255);
+            noStroke();
+            textSize(width / 80);
+            text('How To Play', 0, -height / 8);
+            text('Avoid The Circles That Represent Sun Lights', 0, -height / 15);
+            text('Try To "Encounter" All The Humans To Win The Game', 0, -10);
+            text('Collect Blood To Power Up Your Vision When "Encounter" A Human', 0, 30);
+            text('When In A "Solo Stage" With A Human, You Will Fight With Time', 0, 60);
+            text('You Will Either Lose By Loosing All The Blood When In A "Hunting Stage"', 0, 100);
+            text('Or By Exceeding The Allowed Time When In A "Solo Stage" After Encountering A Human', 0, 140);
+        }
 
-        text('Stay away from the lights or you will pay the price', 0, 15);
-        text('Stay away from the garlics, they stink', 0, 60);
-        text('If you encounter a human, try to kill them quickly,...', 0, 100);
-        text('before the time runs out, and other humans will find you', 0, 140);
+        // next buttons
+        
+        
+
+        // >
+        if (instruction_page < 1) {
+            if (mouseX > width / 2 + 50 - 20 && mouseX < width / 2 + 50 + 20) {
+                if (mouseY > height / 2 + height / 4 - 20 && mouseY < height / 2 + height / 4 + 20) {
+                    fill(225);
+                    rect(50, height / 4, 40, 40);
+                    fill(0);
+                    textSize(43);
+                    text('>', 50, height / 4 + 10);
+                } else {
+                    fill('#B098FF');
+                    rect(50, height / 4, 40, 40);
+                    fill(0);
+                    textSize(40);
+                    text('>', 50, height / 4 + 10);
+                }
+            } else {
+                fill('#B098FF');
+                rect(50, height / 4, 40, 40);
+                fill(0);
+                textSize(40);
+                text('>', 50, height / 4 + 10);
+            }
+        }
+        
+        
+        // <
+        if (instruction_page > 0) {
+            if (mouseX > width / 2 - 50 - 20 && mouseX < width / 2 - 50 + 20) {
+                if (mouseY > height / 2 + height / 4 - 20 && mouseY < height / 2 + height / 4 + 20) {
+                    fill(225);
+                    rect(-50, height / 4, 40, 40);
+                    fill(0);
+                    textSize(43);
+                    text('<', -50, height / 4 + 10);
+                } else {
+                    fill('#B098FF');
+                    rect(-50, height / 4, 40, 40);
+                    fill(0);
+                    textSize(40);
+                    text('<', -50, height / 4 + 10);
+                }
+            } else  {
+                fill('#B098FF');
+                rect(-50, height / 4, 40, 40);
+                fill(0);
+                textSize(40);
+                text('<', -50, height / 4 + 10);
+            }
+        }
 
         // close btn
         const r = 50;
@@ -385,6 +454,24 @@ function mouseReleased() {
         if (d < r / 2) {
             instruction = false;
         }
+
+    // >
+    if (mouseX > width / 2 + 50 - 20 && mouseX < width / 2 + 50 + 20) {
+        if (mouseY > height / 2 + height / 4 - 20 && mouseY < height / 2 + height / 4 + 20) {
+            if (instruction_page < 1) {
+                instruction_page++;
+            }
+        }
+    } 
+    
+    // <
+    if (mouseX > width / 2 - 50 - 20 && mouseX < width / 2 - 50 + 20) {
+        if (mouseY > height / 2 + height / 4 - 20 && mouseY < height / 2 + height / 4 + 20) {
+            if (instruction_page > 0) {
+                instruction_page--;
+            }
+        }
+    }
 }
 
 function draw() {

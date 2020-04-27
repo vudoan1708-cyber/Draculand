@@ -65,7 +65,7 @@ class Dracula {
             strokeWeight(2);
             stroke(0);
             fill(255, 0, 0);
-            text(healthBar + " / 500", 0, 0);
+            text(int(healthBar) + " / 500", 0, 0);
         pop();
     }
 
